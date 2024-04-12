@@ -1,5 +1,0 @@
----
-- name: Installer CLDB
-  apt:
-    name: mapr-cldb
-    state: present

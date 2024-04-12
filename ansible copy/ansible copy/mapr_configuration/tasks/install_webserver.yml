@@ -1,5 +1,0 @@
----
-- name: Installer webserver 
-  apt:
-    name: mapr-webserver  
-    state: present

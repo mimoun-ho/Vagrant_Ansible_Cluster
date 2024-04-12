@@ -1,5 +1,0 @@
----
-- name: Installer MapR Gateway
-  apt:
-    name: mapr-gateway
-    state: present

@@ -1,8 +1,0 @@
----
-- name: Test de connectivité avec le module ping d'Ansible
-  hosts: node_list
-  gather_facts: no
-
-  tasks:
-    - name: Ping tous les hôtes dans le groupe node_list
-      ansible.builtin.ping:
