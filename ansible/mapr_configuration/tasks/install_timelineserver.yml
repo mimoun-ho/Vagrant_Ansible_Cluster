@@ -1,0 +1,5 @@
+---
+- name: Installer MapR TimelineServer
+  apt:
+    name: mapr-timelineserver
+    state: present

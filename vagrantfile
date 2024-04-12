@@ -19,7 +19,8 @@ Vagrant.configure("2") do |config|
 
         # Création et attachement des disques de données
         (1..config_data['num_secondary_disks']).each do |j|
-          disk_path = File.absolute_path("disks/node0#{i}_data#{j}_#{Time.now.to_i}.vdi")
+          disk_filename = "node0#{i}_data#{j}_#{timestamp}.vdi"
+          disk_path = File.join(config_data['disks_folder_path'], disk_filename)
           vb.customize ['createhd', '--filename', disk_path, '--size', config_data['disk_size']]
           vb.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', j, '--device', 0, '--type', 'hdd', '--medium', disk_path]
         end

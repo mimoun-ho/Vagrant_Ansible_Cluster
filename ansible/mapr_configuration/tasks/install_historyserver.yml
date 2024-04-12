@@ -1,0 +1,5 @@
+---
+- name: Installer history server
+  apt:
+    name: mapr-historyserver
+    state: present

@@ -8,3 +8,4 @@ localhost_name: ".cluster.local"
 cpu_edge: 2
 memory_edge: 2048
 localhost_name_edge: ".local"
+disks_folder_path: C:\\Users\\user\\Documents
