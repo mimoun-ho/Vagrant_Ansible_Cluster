@@ -1,0 +1,10 @@
+---
+- name: Installer Warden, NFS, MFS, et NodeManager
+  apt:
+    name:
+      - mapr-warden
+      - mapr-nfs
+      - mapr-fileserver  # C'est l'équivalent de MFS dans les paquets MapR.
+      - mapr-nodemanager
+    state: present
+    update_cache: yes

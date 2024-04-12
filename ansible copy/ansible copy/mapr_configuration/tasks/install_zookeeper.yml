@@ -1,0 +1,5 @@
+---
+- name: Installer Zookeeper
+  apt:
+    name: mapr-zookeeper
+    state: present

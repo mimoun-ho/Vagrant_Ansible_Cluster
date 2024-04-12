@@ -1,0 +1,5 @@
+---
+- name: Installer ressourcemanager
+  apt:
+    name: mapr-resourcemanager 
+    state: present

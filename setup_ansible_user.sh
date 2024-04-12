@@ -3,8 +3,12 @@
 # Créer l'utilisateur ansible
 useradd -m -s /bin/bash ansible
 
-# Sans mot de passe pour l'utilisateur (optionnel, pour démo ou environnements contrôlés)
+# Définir un mot de passe pour l'utilisateur ansible
+echo ansible:ansible | chpasswd
+
+ 
 echo "ansible ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/ansible
+chmod 0440 /etc/sudoers.d/ansible
 
 # Configuration initiale pour SSH (facultatif, dépend de votre setup Ansible)
 mkdir -p /home/ansible/.ssh

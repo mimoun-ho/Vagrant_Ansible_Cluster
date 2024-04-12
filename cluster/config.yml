@@ -1,7 +1,0 @@
-num_vms: 2
-ip_range: "192.168.50"
-num_secondary_disks: 2
-disk_size: 25600
-cpu: 2
-memory: 2048
-localhost_name: ".cluster.local"

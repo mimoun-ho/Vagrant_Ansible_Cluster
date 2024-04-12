@@ -1,0 +1,42 @@
+---
+# Fichier principal pour le rôle hadoop_common
+
+- import_tasks: update_hosts.yml
+
+- import_tasks: add_repository_credential.yml
+
+# Installer les utilitaires sur tous les nœuds
+- include_tasks: install_utilities.yml
+
+- include_tasks: install_base_mapr.yml
+
+# Installer Zookeeper sur les nœuds Zookeeper
+- include_tasks: install_zookeeper.yml
+  when: "'zookeeper_nodes' in group_names"
+
+# Installer CLDB sur les nœuds CLDB
+- include_tasks: install_cldb.yml
+  when: "'cldb_nodes' in group_names"
+
+# Installer HistoryServer sur les nœuds HistoryServer
+- include_tasks: install_historyserver.yml
+  when: "'historyserver_nodes' in group_names"
+
+# Installer Gateway sur les nœuds Gateway
+- include_tasks: install_gateway.yml
+  when: "'gateway_nodes' in group_names"
+
+# Installer ResourceManager sur les nœuds ResourceManager
+- include_tasks: install_resourcemanager.yml
+  when: "'resourcemanager_nodes' in group_names"
+
+# Installer TimelineServer sur les nœuds TimelineServer
+- include_tasks: install_timelineserver.yml
+  when: "'timelineserver_nodes' in group_names"
+
+# Installer WebServer sur les nœuds WebServer
+- include_tasks: install_webserver.yml
+  when: "'webserver_nodes' in group_names"
+
+- import_tasks: create_user_group.yml
+ 
