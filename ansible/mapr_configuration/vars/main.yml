@@ -11,3 +11,4 @@ firewall_ports:
   - "8088/tcp"
   - "7221/tcp"
   - "5181/tcp"
+  - "8443/tcp"
