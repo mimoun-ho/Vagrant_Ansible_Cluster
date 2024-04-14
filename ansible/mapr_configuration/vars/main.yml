@@ -1,3 +1,13 @@
 ---
 mapr_version: "v6.1.1"
 mapr_ecosystem_version: "MEP-6.1.1"
+cluster_name: mapr.cluster.local
+firewall_ports:
+  - "2888/tcp"
+  - "3888/tcp"
+  - "8888/tcp"
+  - "5660/tcp"
+  - "7222/tcp"
+  - "8088/tcp"
+  - "7221/tcp"
+  - "5181/tcp"

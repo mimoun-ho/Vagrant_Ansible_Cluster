@@ -2,7 +2,7 @@
   blockinfile:
     path: /etc/hosts
     block: |
-      {% for host in groups['all'] %}
+      {% for host in groups['all_nodes'] %}
       {{ hostvars[host]['ansible_host'] }} {{ host }}
       {% endfor %}
     marker: "# {mark} ANSIBLE MANAGED BLOCK"

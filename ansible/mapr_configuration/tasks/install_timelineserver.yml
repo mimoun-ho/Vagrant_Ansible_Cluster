@@ -1,5 +1,12 @@
 ---
-- name: Installer MapR TimelineServer
+- name: Installer MapR TimelineServer pour Ubuntu
   apt:
     name: mapr-timelineserver
     state: present
+  when: "'Ubuntu' in hostvars[inventory_hostname]['OS']"
+
+- name: Installer MapR TimelineServer pour CentOS
+  yum:
+    name: mapr-timelineserver
+    state: present
+  when: "'CentOS' in hostvars[inventory_hostname]['OS']"

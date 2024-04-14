@@ -1,5 +1,12 @@
 ---
-- name: Installer Zookeeper
+- name: Installer Zookeeper pour Ubuntu
   apt:
     name: mapr-zookeeper
     state: present
+  when: "'Ubuntu' in hostvars[inventory_hostname]['OS']"
+
+- name: Installer Zookeeper pour CentOS
+  yum:
+    name: mapr-zookeeper
+    state: present
+  when: "'CentOS' in hostvars[inventory_hostname]['OS']"

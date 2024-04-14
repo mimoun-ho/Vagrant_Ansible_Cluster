@@ -3,7 +3,7 @@
   hosts: all_nodes
   become: yes
   vars_files:
-    - /home/ansible/ansible copy/mapr_configuration/vars/creds.yml  # Assurez-vous que le chemin est correct
+    - ./mapr_configuration/vars/creds.yml  # Assurez-vous que le chemin est correct
   roles:
     - role: mapr_configuration
  
@@ -21,6 +21,5 @@
 
 
       
-
-
+ 
 

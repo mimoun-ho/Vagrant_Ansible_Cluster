@@ -1,0 +1,14 @@
+- name: Vérifier si disksetup a déjà été effectué
+  stat:
+    path: /opt/mapr/conf/disks_configured
+  register: disks_already_setup
+
+- name: Exécuter disksetup pour configurer les disques
+  command: /opt/mapr/server/disksetup -F /tmp/disks
+  when: not disks_already_setup.stat.exists
+
+- name: Marquer les disques comme configurés
+  file:
+    path: /opt/mapr/conf/disks_configured
+    state: touch
+  when: not disks_already_setup.stat.exists
