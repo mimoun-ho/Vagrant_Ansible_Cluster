@@ -33,23 +33,18 @@ Vagrant.configure("2") do |config|
 
   # Configuration spécifique pour le serveur Edge
   config.vm.define "Edge" do |edge|
-    edge.vm.box = "bento/ubuntu-18.04"
+    edge.vm.box = "bento/centos-7"
     edge.vm.hostname = "Edge#{config_data['localhost_name_edge']}"
-    edge.vm.network "private_network", ip: "#{config_data['ip_range']}.99"
+    edge.vm.network "private_network", ip: "#{config_data['ip_range']}.199"
 
     edge.vm.provider "virtualbox" do |vb|
-      vb.name = "Edge_ubuntu-18.04"
+      vb.name = "Edge_centos-7"
       vb.memory = config_data['memory_edge']
       vb.cpus = config_data['cpu_edge']
     end
-
-    # Installation d'Ansible
-    edge.vm.provision "shell", inline: <<-SHELL
-      sudo apt update
-      sudo apt install -y ansible
-    SHELL
-
     # Utilisation du script setup_ansible_user.sh pour le serveur Edge
     edge.vm.provision "shell", path: "setup_ansible_user.sh"
   end
 end
+
+
