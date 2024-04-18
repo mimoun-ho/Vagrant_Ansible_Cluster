@@ -3,23 +3,19 @@
   hosts: all_nodes
   become: yes
   vars_files:
-    - ./mapr_configuration/vars/creds.yml  # Assurez-vous que le chemin est correct
-  roles:
-    - role: mapr_configuration
- 
+    - ./mapr_configuration/vars/creds.yml   
 
+  tasks:
+    - name: Exécuter le rôle mapr_configuration
+      include_role:
+        name: mapr_configuration
 
-# - name: Configurer les nœuds Master Hadoop
-#   hosts: zookeeper
-#   become: yes
-#   roles:
-#     - role: hadoop_config
-#       vars:
-#         conf_workers: true
-#         dl_extract_zk: true
-#         configure_zookeeper: true
+    - name: Pause pour permettre la mise à jour manuelle des fichiers de licence
+      pause:
+        prompt: "Veuillez placer les fichiers de licence dans le dossier approprié et appuyer sur 'Enter' pour continuer..."
 
-
-      
- 
-
+    - name: Exécuter le rôle mapr_cluster_setup
+      include_role:
+        name: mapr_cluster_setup
+      tags:
+        - setup_cluster

@@ -1,5 +1,5 @@
 ---
-# Fichier principal pour le rôle hadoop_common
+#Fichier principal pour le rôle hadoop_common
 
 - import_tasks: update_hosts.yml
 
@@ -15,6 +15,6 @@
 
 - import_tasks: create_user_group.yml
 
-- import_tasks: configure_cluster.yml
-
-- import_tasks: attach_disks.yml
+- import_tasks: get_license.yml
+  when: inventory_hostname == groups['CLDB_nodes'][0]
+ 

@@ -1,0 +1,34 @@
+- name: Ensure the license directory exists
+  file:
+    path: /opt/mapr/licenses
+    state: directory
+    owner: mapr
+    group: mapr
+    mode: '0755'
+  delegate_to: "{{ groups['CLDB_nodes'][0] }}"
+  run_once: true
+
+
+- name: Transfer license files to the first CLDB node
+  copy:
+    src: "{{ item }}"
+    dest: "/opt/mapr/licenses/{{ item | replace('%20', ' ') }}"
+    owner: mapr
+    group: mapr
+    mode: '0644'
+  loop:
+    - "Ezmeral%20Enterpr_38608310.DAT"
+    - "Ezmeral%20POSIX%20C_38608310.DAT"
+    - "Ezmeral%20POSIX%20P_38608310.DAT"
+  delegate_to: "{{ groups['CLDB_nodes'][0] }}"
+  run_once: true
+
+- name: Add license files to the cluster
+  command: >
+    maprcli license add -cluster {{ cluster_name }} -license '/opt/mapr/licenses/{{ item | replace('%20', ' ') }}' -is_file true
+  loop:
+    - "Ezmeral%20Enterpr_38608310.DAT"
+    - "Ezmeral%20POSIX%20C_38608310.DAT"
+    - "Ezmeral%20POSIX%20P_38608310.DAT"
+  delegate_to: "{{ groups['CLDB_nodes'][0] }}"
+  run_once: true

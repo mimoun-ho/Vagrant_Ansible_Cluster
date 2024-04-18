@@ -1,0 +1,10 @@
+ 
+# - name: Exécuter configure.sh
+#   command: >
+#     /opt/mapr/server/configure.sh -no-autostart
+#     -C node01.cluster.local
+#     -Z node01.cluster.local
+#     -N bismi.allahi.com
+#   tags:
+#     - configure_cluster
+    

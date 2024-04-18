@@ -1,3 +1,15 @@
+- name: Update all packages to the latest version pour CentOS
+  yum:
+    name: "*"
+    state: latest
+  when: "'CentOS' in hostvars[inventory_hostname]['OS']"
+
+- name: Update all packages to the latest version pour Ubuntu
+  apt:
+    name: "*"
+    state: latest
+  when: "'Ubuntu' in hostvars[inventory_hostname]['OS']"
+
 - name: Installer les utilitaires et mettre à jour la liste des paquets disponibles pour Ubuntu
   apt:
     name:

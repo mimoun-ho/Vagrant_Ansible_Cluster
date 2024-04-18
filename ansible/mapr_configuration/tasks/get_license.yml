@@ -1,0 +1,82 @@
+
+- name: Check if the cluster is already configured
+  stat:
+    path: /opt/mapr/conf/cluster_configured.txt
+  register: cluster_configured
+  delegate_to: "{{ groups['CLDB_nodes'][0] }}"
+
+- name: Exécuter configure.sh sur le premier nœud CLDB uniquement
+  command: >
+    /opt/mapr/server/configure.sh -no-autostart
+    -C {{ groups['CLDB_nodes'][0] }}
+    -Z {{ groups['CLDB_nodes'][0] }}
+    -N {{ cluster_name }}
+  when: not cluster_configured.stat.exists
+
+- name: Reload systemd daemon
+  systemd:
+    daemon_reload: yes
+  when: not cluster_configured.stat.exists
+
+- name: Start MapR-ZooKeeper
+  systemd:
+    name: mapr-zookeeper
+    state: started
+  when: not cluster_configured.stat.exists
+
+- name: Start MapR-Warden
+  systemd:
+    name: mapr-warden
+    state: started
+  when: not cluster_configured.stat.exists
+  
+- name: Update all packages to the latest version pour CentOS
+  yum:
+    name: "*"
+    state: latest
+  when: "'CentOS' in hostvars[inventory_hostname]['OS']"
+
+- name: Update all packages to the latest version pour Ubuntu
+  apt:
+    name: "*"
+    state: latest
+  when: "'Ubuntu' in hostvars[inventory_hostname]['OS']"
+
+  
+- name: Wait for MapR services to stabilize
+  pause:
+    seconds: 10   
+  when: not cluster_configured.stat.exists
+
+- name: Setup disks
+  command: /opt/mapr/server/disksetup -F /tmp/disks
+  ignore_errors: true   
+  when: not cluster_configured.stat.exists
+
+- name: Check for MapR Cluster ID
+  shell: maprcli license showId
+  register: license_output
+  until: "license_output.stdout != 'ERROR (10003) -  Show ClusterID: EOPFAILED'"
+  retries: 5
+  delay: 10  # Wait 10 seconds between retries
+
+
+- name: Debug license output
+  debug:
+    var: license_output.stdout
+  delegate_to: localhost
+
+  
+- name: Print the Cluster ID and save it to a local file
+  delegate_to: localhost
+  copy:
+    content: "The Cluster ID is {{ license_output.stdout }}"
+    dest: "./output/cluster_id.txt"
+
+
+- name: Mark the cluster as configured
+  file:
+    path: /opt/mapr/conf/cluster_configured.txt
+    state: touch
+  delegate_to: "{{ groups['CLDB_nodes'][0] }}"
+  when: license_output.stdout is defined and "ERROR" not in license_output.stdout
