@@ -22,16 +22,3 @@
     update_cache: yes
   when: "'CentOS' in hostvars[inventory_hostname]['OS']"
 
-- name: Démarrer et activer firewalld
-  systemd:
-    name: firewalld
-    state: started
-    enabled: true
-    
-- name: Ouvrir les ports nécessaires 
-  firewalld:
-    port: "{{ item }}"
-    permanent: true
-    state: enabled
-    immediate: true
-  with_items: "{{ firewall_ports }}"

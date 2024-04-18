@@ -1,3 +1,8 @@
+# Pour chaque hôte, Ansible détermine le groupe de services auquel il appartient en utilisant la variable match_group.
+# Ensuite, Ansible récupère la liste des ports du fichier de variables basé sur ce groupe de services.
+# Le module firewalld est ensuite appelé pour chaque port dans cette liste, configurant le pare-feu pour permettre le trafic sur ces ports.
+# Chaque type de noeud aura uniquement les ports nécessaires ouverts
+
 - name: Démarrer et activer firewalld
   systemd:
     name: firewalld
@@ -10,7 +15,14 @@
     permanent: true
     state: enabled
     immediate: true
-  loop: "{{ service_ports[match_group] | default([]) }}"
-  when: match_group is defined
+  loop: "{{ query('dict', service_ports) | selectattr('key', 'in', match_groups) | map(attribute='value') | flatten }}"
+  when: match_groups | length > 0
   vars:
-    match_group: "{{ group_names | map('regex_replace', '_nodes$', '') | map('regex_replace', '^.*_', '') | select('in', service_ports.keys()) | first }}"
+    match_groups: "{{ group_names | map('regex_replace', '_nodes$', '') | map('regex_replace', '^.*_', '') | select('in', service_ports.keys()) | list }}"
+
+
+# group_names: Liste des groupes auxquels appartient l'hôte courant.
+# map('regex_replace', '_nodes$', ''): Supprime le suffixe _nodes des noms de groupe.
+# map('regex_replace', '^.*_', ''): Supprime tout préfixe terminant par _ (extrait la partie significative du nom).
+# select('in', service_ports.keys()): Sélectionne les éléments qui correspondent à une clé dans service_ports.
+

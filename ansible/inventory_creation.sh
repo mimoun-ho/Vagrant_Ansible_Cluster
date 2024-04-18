@@ -15,23 +15,23 @@ INVENTORY_FILE="inventory.ini"
 
 # Initialisation du fichier d'inventaire avec les groupes nécessaires
 if [ ! -f "$INVENTORY_FILE" ]; then
-    echo "[zookeeper_nodes]" > "$INVENTORY_FILE"
-    echo "[cldb_nodes]" >> "$INVENTORY_FILE"
-    echo "[resource_manager_nodes]" >> "$INVENTORY_FILE"
-    echo "[fileserver_nodes]" >> "$INVENTORY_FILE"
-    echo "[nfs_nodes]" >> "$INVENTORY_FILE"
-    echo "[nodemanager_nodes]" >> "$INVENTORY_FILE"
-    echo "[historyserver_nodes]" >> "$INVENTORY_FILE"
-    echo "[webserver_nodes]" >> "$INVENTORY_FILE"
-    echo "[api_server_nodes]" >> "$INVENTORY_FILE"   
-    echo "[timelineserver_nodes]" >> "$INVENTORY_FILE"
-    echo "[hue_nodes]" >> "$INVENTORY_FILE"
-    echo "[drill_nodes]" >> "$INVENTORY_FILE"
-    echo "[hive_nodes]" >> "$INVENTORY_FILE"  
-    echo "[opentsdb_nodes]" >> "$INVENTORY_FILE"
-    echo "[collectd_nodes]" >> "$INVENTORY_FILE"
-    echo "[gateway_nodes]" >> "$INVENTORY_FILE"
-    echo "[httpfs_nodes]" >> "$INVENTORY_FILE"
+    echo "[ZooKeeper_nodes]" > "$INVENTORY_FILE"
+    echo "[CLDB_nodes]" >> "$INVENTORY_FILE"
+    echo "[ResourceManager_nodes]" >> "$INVENTORY_FILE"
+    echo "[FileServer_nodes]" >> "$INVENTORY_FILE"
+    echo "[NFS_nodes]" >> "$INVENTORY_FILE"
+    echo "[NodeManager_nodes]" >> "$INVENTORY_FILE"
+    echo "[HistoryServer_nodes]" >> "$INVENTORY_FILE"
+    echo "[WebServer_nodes]" >> "$INVENTORY_FILE"
+    echo "[ApiServer_nodes]" >> "$INVENTORY_FILE"   
+    echo "[TimelineServer_nodes]" >> "$INVENTORY_FILE"
+    echo "[Hue_nodes]" >> "$INVENTORY_FILE"
+    echo "[Drill_nodes]" >> "$INVENTORY_FILE"
+    echo "[Hive_nodes]" >> "$INVENTORY_FILE"  
+    echo "[OpenTSDB_nodes]" >> "$INVENTORY_FILE"
+    echo "[CollecTD_nodes]" >> "$INVENTORY_FILE"
+    echo "[Gateway_nodes]" >> "$INVENTORY_FILE"
+    echo "[Httpfs_nodes]" >> "$INVENTORY_FILE"
     echo "[edge_node]" >> "$INVENTORY_FILE"
     echo "[all_nodes]" >> "$INVENTORY_FILE"
 fi
@@ -65,9 +65,10 @@ for IP in $(seq $START $END) $SPECIAL_IP; do
         # Récupère le nom d'hôte et l'OS
         HOSTNAME=$(sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa_new $USERNAME@$FULL_IP 'hostname' 2>/dev/null)
         OS=$(sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa_new $USERNAME@$FULL_IP 'cat /etc/os-release | grep PRETTY_NAME | cut -d "=" -f2' 2>/dev/null)
+        DISKS=$(sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa_new $USERNAME@$FULL_IP "lsblk -dno NAME | egrep 'sdb|sdc|sdd|sde|sdf' | wc -l" 2>/dev/null)
 
         # Formate l'entrée d'inventaire
-        INVENTORY_ENTRY="$HOSTNAME ansible_host=$FULL_IP ansible_user=$USERNAME OS=$OS"
+        INVENTORY_ENTRY="$HOSTNAME ansible_host=$FULL_IP ansible_user=$USERNAME OS=$OS nfs_disks=$DISKS"
 
         # Vérifie si l'entrée existe déjà pour éviter les doublons
         if ! grep -Fxq "$INVENTORY_ENTRY" "$INVENTORY_FILE"; then

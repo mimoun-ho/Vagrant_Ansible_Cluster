@@ -2,7 +2,7 @@
 mapr_version: "v6.1.1"
 mapr_ecosystem_version: "MEP-6.1.1"
 cluster_name: mapr.cluster.local
-
+gid: 3333
 service_ports:
 
   ApiServer:
@@ -19,6 +19,7 @@ service_ports:
     - "7221/tcp" # CLDB web port
   WebServer:
     - "7443/tcp"
+    - "8443/tcp"
   Data_Access_Gateway:
     - "5678/tcp"
   Drill:
@@ -34,6 +35,7 @@ service_ports:
     - "9444/tcp"
   Gateway:
     - "7660/tcp"
+    - "5678/tcp"
   Grafana:
     - "3000/tcp"
   HBase:
@@ -77,8 +79,6 @@ service_ports:
     - "5692/tcp"
     - "5724/tcp"
     - "5756/tcp"
-  Gateway:
-    - "7660/tcp"
   NFS:
     - "9997/tcp"
     - "9998/tcp"
@@ -118,16 +118,14 @@ service_ports:
     - "12000/tcp"
   Tez:
     - "13563/tcp" # Shuffle
-  Timeline_Server:
+  TimelineServer:
     - "10200/tcp"
     - "8188/tcp" # Web Interface (HTTP)
     - "8190/tcp" # Web Interface (HTTPS)
   Tomcat_Hive_on_Tez_UI:
     - "9383/tcp" # Port
     - "9393/tcp" # SSL Port
-  Web_UI:
-    - "8443/tcp"
   Zeppelin:
     - "9995/tcp"
-  ZooKeeper_Communication:
+
 

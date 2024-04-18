@@ -1,7 +1,7 @@
 - name: S'assurer que le groupe mapr existe avec le GID 3333
   group:
     name: mapr
-    gid: 3333
+    gid: "{{ gid }}"
     state: present
 
 
