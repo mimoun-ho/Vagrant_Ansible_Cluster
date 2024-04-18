@@ -2,10 +2,15 @@
 # Configuration initiale
 ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa_new -N ""  # Création d'une nouvelle clé SSH sans passphrase
 START=101
-END=110
+END=105
+SPECIAL_IP="192.168.50.199"  # Adresse IP spéciale à vérifier
 SUBNET="192.168.50"
 USERNAME="ansible"
-PASSWORD="ansible"  # Remplacez par votre propre méthode sécurisée de gestion des mots de passe
+
+# Demande du mot de passe
+echo "Veuillez entrer le mot de passe pour les connexions SSH:"
+read -s PASSWORD
+
 INVENTORY_FILE="inventory.ini"
 
 # Initialisation du fichier d'inventaire avec les groupes nécessaires
@@ -13,16 +18,40 @@ if [ ! -f "$INVENTORY_FILE" ]; then
     echo "[zookeeper_nodes]" > "$INVENTORY_FILE"
     echo "[cldb_nodes]" >> "$INVENTORY_FILE"
     echo "[resource_manager_nodes]" >> "$INVENTORY_FILE"
+    echo "[fileserver_nodes]" >> "$INVENTORY_FILE"
+    echo "[nfs_nodes]" >> "$INVENTORY_FILE"
+    echo "[nodemanager_nodes]" >> "$INVENTORY_FILE"
     echo "[historyserver_nodes]" >> "$INVENTORY_FILE"
     echo "[webserver_nodes]" >> "$INVENTORY_FILE"
-    echo "[gateway_nodes]" >> "$INVENTORY_FILE"
+    echo "[api_server_nodes]" >> "$INVENTORY_FILE"   
     echo "[timelineserver_nodes]" >> "$INVENTORY_FILE"
+    echo "[hue_nodes]" >> "$INVENTORY_FILE"
+    echo "[drill_nodes]" >> "$INVENTORY_FILE"
+    echo "[hive_nodes]" >> "$INVENTORY_FILE"  
+    echo "[opentsdb_nodes]" >> "$INVENTORY_FILE"
+    echo "[collectd_nodes]" >> "$INVENTORY_FILE"
+    echo "[gateway_nodes]" >> "$INVENTORY_FILE"
+    echo "[httpfs_nodes]" >> "$INVENTORY_FILE"
+    echo "[edge_node]" >> "$INVENTORY_FILE"
     echo "[all_nodes]" >> "$INVENTORY_FILE"
 fi
 
+# Vérification de la connectivité et de la configuration pour la machine spéciale
+echo "Vérification de la joignabilité de $SPECIAL_IP par ping..."
+if ping -c 1 $SPECIAL_IP &> /dev/null; then
+    echo "$SPECIAL_IP est joignable."
+else
+    echo "$SPECIAL_IP n'est pas joignable via ping."
+fi
+
 # Boucle sur la plage d'adresses IP
-for IP in $(seq $START $END); do
-    FULL_IP="$SUBNET.$IP"
+for IP in $(seq $START $END) $SPECIAL_IP; do
+    
+    if [ "$IP" == "$SPECIAL_IP" ]; then
+        FULL_IP=$SPECIAL_IP
+    else
+        FULL_IP="$SUBNET.$IP"
+    fi
     echo "Vérification de la joignabilité de $FULL_IP par ping..."
     
     if ping -c 1 $FULL_IP &> /dev/null; then

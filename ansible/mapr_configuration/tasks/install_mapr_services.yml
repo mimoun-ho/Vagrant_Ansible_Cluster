@@ -1,0 +1,27 @@
+- name: Installer Warden, NFS, MFS, et NodeManager sur Ubuntu
+  apt:
+    name:
+      - mapr-nfs
+      - mapr-fileserver   
+      - mapr-nodemanager
+    state: present
+    update_cache: yes
+  when: "'Ubuntu' in hostvars[inventory_hostname]['OS']"
+
+- name: Installer Warden, NFS, MFS, et NodeManager sur CentOS
+  yum:
+    name:
+      - mapr-nfs
+      - mapr-fileserver   
+      - mapr-nodemanager
+      - mapr-apiserver.noarch
+      - mapr-cldb.x86_64
+      - mapr-gateway.x86_64
+      - mapr-historyserver.x86_64
+      - mapr-resourcemanager.x86_64
+      - mapr-webserver.noarch
+      - mapr-zookeeper
+      - mapr-timelineserver
+    state: present
+    update_cache: yes
+  when: "'CentOS' in hostvars[inventory_hostname]['OS']"
