@@ -1,0 +1,37 @@
+sudo firewall-cmd --zone=public --add-port="3888"/tcp --permanent
+sudo firewall-cmd --zone=public --list-all
+sudo firewall-cmd --set-default-zone=trusted
+sudo firewall-cmd --set-default-zone=public
+sudo firewall-cmd --reload
+
+zookeeper
+
+cat /opt/mapr/zookeeper/zookeeper-3.4.11/conf/zoo.cfg
+sudo sed -i "s/server.1=$(hostname):2888:3888/server.1=0.0.0.0:2888:3888/" /opt/mapr/zookeeper/zookeeper-3.4.11/conf/zoo.cfg
+
+configure
+sudo /opt/mapr/server/configure.sh -no-autostart -C node03.cluster.local -Z node01.cluster.local,node02.cluster.local,node03.cluster.local -N mapr.cluster.local
+sudo /opt/mapr/server/configure.sh -R
+cat /opt/mapr/conf/mapr-clusters.conf
+
+license
+
+sudo maprcli license showId
+
+systemctl
+
+sudo systemctl start mapr-zookeeper
+sudo systemctl start mapr-warden
+sudo systemctl restart mapr-zookeeper
+sudo systemctl restart mapr-warden
+sudo systemctl status mapr-zookeeper
+sudo systemctl status mapr-warden
+sudo systemctl stop mapr-zookeeper
+sudo systemctl stop mapr-warden
+
+MapR File System (MapR-FS) : C'est le système de fichiers distribué de MapR. Il remplace HDFS dans un environnement Hadoop standard.
+MapR Control System (MCS) : Fournit une interface utilisateur graphique pour la gestion du cluster.
+MapR-CLDB (Container Location Database) : Essentiel pour la gestion des métadonnées et le fonctionnement du système de fichiers.
+ZooKeeper : Nécessaire pour la coordination et la configuration distribuée du cluster.
+MapR NodeManager : Gère les ressources de calcul sur chaque nœud.
+MapR ResourceManager : Gère les ressources de l'ensemble du cluster et planifie les tâches.
