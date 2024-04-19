@@ -1,7 +1,9 @@
 - name: Configure MapR services on all nodes
   command: >
     /opt/mapr/server/configure.sh -no-autostart
-    -C {{ groups['cldb_nodes'] | join(',') }}
-    -Z {{ groups['zookeeper_nodes'] | join(',') }}
+    -C {{ groups['CLDB_nodes'] | join(',') }}
+    -Z {{ groups['ZooKeeper_nodes'] | join(',') }}
     -N {{ cluster_name }}
-    
+
+
+   

@@ -49,10 +49,14 @@
     seconds: 10   
   when: not cluster_configured.stat.exists
 
-- name: Setup disks
+- name: Exécuter disksetup pour configurer les disques
   command: /opt/mapr/server/disksetup -F /tmp/disks
-  ignore_errors: true   
-  when: not cluster_configured.stat.exists
+  when:
+    - not disks_already_setup.stat.exists
+    - hostvars[inventory_hostname]['nfs_disks'] | default(0) | int > 0
+  register: disk_setup_result
+  failed_when: >
+    disk_setup_result.rc != 0 and 'Disk already added in disktab' not in disk_setup_result.stdout
 
 - name: Check for MapR Cluster ID
   shell: maprcli license showId

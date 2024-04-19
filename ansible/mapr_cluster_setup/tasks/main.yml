@@ -1,4 +1,9 @@
 ---
 - include_tasks: upload_license.yml
   when: inventory_hostname in groups['Licence_node']
+ 
+- include_tasks: configure_cluster.yml
 
+- include_tasks: attach_disks.yml
+
+- include_tasks: start_cluster.yml
