@@ -1,4 +1,4 @@
-- name: S'assurer que le groupe mapr existe avec le GID 3333
+- name: S'assurer que le groupe mapr existe avec le GID commun
   group:
     name: mapr
     gid: "{{ gid }}"

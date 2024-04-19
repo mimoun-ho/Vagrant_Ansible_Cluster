@@ -52,7 +52,6 @@
 - name: Exécuter disksetup pour configurer les disques
   command: /opt/mapr/server/disksetup -F /tmp/disks
   when:
-    - not disks_already_setup.stat.exists
     - hostvars[inventory_hostname]['nfs_disks'] | default(0) | int > 0
   register: disk_setup_result
   failed_when: >

@@ -1,0 +1,22 @@
+- name: Configure zoo.cfg to listen on all interfaces
+  lineinfile:
+    path: /opt/mapr/zookeeper/zookeeper-3.4.11/conf/zoo.cfg
+    regexp: '^server.{{ item.id }}={{ hostvars[item.host].ansible_fqdn }}:2888:3888'
+    line: 'server.{{ item.id }}=0.0.0.0:2888:3888'
+  loop:
+    - { id: 0, host: 'node01.cluster.local' }
+    - { id: 1, host: 'node02.cluster.local' }
+    - { id: 2, host: 'node03.cluster.local' }
+  loop_control:
+    loop_var: item
+  when: inventory_hostname == item.host
+  tags:
+    - modif_zk
+
+
+
+- name: restart zookeeper
+  service:
+    name: mapr-zookeeper
+    state: restarted
+  when: inventory_hostname in groups['ZooKeeper_nodes']

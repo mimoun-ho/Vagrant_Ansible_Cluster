@@ -1,2 +1,0 @@
-[vms]
-node01 ansible_host=192.168.50.101 ansible_user=vagrant

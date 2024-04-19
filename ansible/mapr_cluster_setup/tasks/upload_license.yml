@@ -1,103 +1,54 @@
-
-- name: Initialize already added licenses list
-  set_fact:
-    already_added_licenses: []
-  delegate_to: "{{ groups['Licence_node'] | first }}"
-  run_once: true
-  
-- name: Ensure the license directory exists
-  file:
-    path: /opt/mapr/licenses
-    state: directory
-    owner: mapr
-    group: mapr
-    mode: '0755'
-  delegate_to: "{{ groups['Licence_node'] | first }}"
-  run_once: true
-  when: inventory_hostname == groups['Licence_node'] | first
-
-- name: Check for existing license files in the directory
+- name: Find all .DAT files in the specified directory
   find:
-    paths: "/opt/mapr/licenses"
+    paths: "mapr_cluster_setup/files"
     patterns: "*.DAT"
   register: existing_files
-  delegate_to: "{{ groups['Licence_node'] | first }}"
-  run_once: true
+  delegate_to: localhost
 
-- name: Check if the license log file exists
-  stat:
-    path: "/opt/mapr/licenses/license_additions.log"
-  register: log_file
-  delegate_to: "{{ groups['Licence_node'] | first }}"
-  run_once: true
-
-- name: Create the license log file if it does not exist
-  file:
-    path: "/opt/mapr/licenses/license_additions.log"
-    state: touch
-    owner: mapr
-    group: mapr
-    mode: '0644'
-  when: not log_file.stat.exists
-  delegate_to: "{{ groups['Licence_node'] | first }}"
-  run_once: true
-
-- name: Slurp the content of the license log file
-  slurp:
-    src: "/opt/mapr/licenses/license_additions.log"
-  register: license_log
-  delegate_to: "{{ groups['Licence_node'] | first }}"
-  run_once: true
-
-- name: Set fact for already added licenses
-  set_fact:
-    already_added_licenses: "{{ (license_log['content'] | b64decode).split('\n') | map('regex_replace', 'License added successfully: (.*)$', '\\1') | list }}"
-  when: license_log.content != ""
-
-
-- name: Ask user if they want to proceed with transferring license files
-  pause:
-    prompt: "License files already exist in the directory. Do you want to proceed with transferring new files? (yes/no)"
-  register: user_input
-  when: existing_files.files | length > 0
-
-
-- name: Transfer license files to the first CLDB node
-  copy:
-    src: "{{ item }}"
-    dest: "/opt/mapr/licenses/{{ item | replace('%20', ' ') }}"
-    owner: mapr
-    group: mapr
-    mode: '0644'
-  loop:
-    - "Ezmeral%20Enterpr_38608310.DAT"
-    - "Ezmeral%20POSIX%20C_38608310.DAT"
-    - "Ezmeral%20POSIX%20P_38608310.DAT"
-  delegate_to: "{{ groups['Licence_node'] | first }}"
-  run_once: true
-  when: inventory_hostname == groups['Licence_node'] | first and user_input.user_input | lower == 'yes'
-  ignore_errors: true  # Ajoutez cette option pour ignorer les erreurs et continuer l'exécution
-
-- name: Add license files to the cluster if not already added
+- name: Rename files to remove URL encoding
   command: >
-    maprcli license add -cluster {{ cluster_name }} -license '/opt/mapr/licenses/{{ item | replace('%20', ' ') }}' -is_file true
-  loop:
-    - "Ezmeral%20Enterpr_38608310.DAT"
-    - "Ezmeral%20POSIX%20C_38608310.DAT"
-    - "Ezmeral%20POSIX%20P_38608310.DAT"
-  when: "'License added successfully: ' + item | replace('%20', ' ') not in already_added_licenses"
+    mv "{{ item.path }}" "{{ item.path | regex_replace('%20', ' ') }}"
+  loop: "{{ existing_files.files }}"
+  delegate_to: localhost
+  when: "'%20' in item.path"
+  run_once: true
+
+- name: Capture license list output
+  shell: maprcli license list
+  register: license_output
+  delegate_to: "{{ groups['Licence_node'] | first }}"
+  run_once: true
+
+- name: Count the number of licenses
+  set_fact:
+    license_count: "{{ license_output.stdout | regex_findall('customerid:') | length }}"
+  delegate_to: "{{ groups['Licence_node'] | first }}"
+  run_once: true
+
+- name: Debug license count
+  debug:
+    var: license_count
+  delegate_to: "{{ groups['Licence_node'] | first }}"
+  run_once: true
+
+- name: Transfer license files if less than 4 are present
+  copy:
+    src: "{{ item.path | regex_replace('%20', ' ') }}"
+    dest: "/opt/mapr/licenses/{{ item.path | basename | regex_replace('%20', ' ') }}"
+    owner: mapr
+    group: mapr
+    mode: '0644'
+  loop: "{{ existing_files.files }}"
+  when: license_count | int < 4
+  delegate_to: "{{ groups['Licence_node'] | first }}"
+  run_once: true
+
+- name: Add license files to the cluster if needed
+  command: >
+    maprcli license add -cluster {{ cluster_name }} -license '/opt/mapr/licenses/{{ item.path | basename | regex_replace('%20', ' ') }}' -is_file true
+  loop: "{{ existing_files.files }}"
+  when: license_count | int < 4
   register: license_add_result
   delegate_to: "{{ groups['Licence_node'] | first }}"
   run_once: true
   ignore_errors: true
-
-
-- name: Record successful license addition
-  lineinfile:
-    path: "/opt/mapr/licenses/license_additions.log"
-    line: "License added successfully: {{ item.item }}"
-    create: yes
-  loop: "{{ license_add_result.results }}"
-  when: item.rc == 0
-  delegate_to: "{{ groups['Licence_node'] | first }}"
-  run_once: true

@@ -2,9 +2,9 @@ num_vms: 3
 ip_range: "192.168.50"
 num_secondary_disks: 2
 disk_size: 25600
-cpu: 2
-memory: 3000
+cpu: 3
+memory: 8000
 localhost_name: ".cluster.local"
 cpu_edge: 2
-memory_edge: 2048
+memory_edge: 6000
 disks_folder_path: C:\\Users\\user\\Documents\\disks
