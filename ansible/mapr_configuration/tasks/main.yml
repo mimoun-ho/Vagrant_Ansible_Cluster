@@ -16,5 +16,6 @@
 - import_tasks: create_user_group.yml
 
 - import_tasks: get_license.yml
-  when: inventory_hostname == groups['CLDB_nodes'][0]
+  when: inventory_hostname in groups['Licence_node']
+
  

@@ -15,7 +15,7 @@
         prompt: "Veuillez placer les fichiers de licence dans le dossier approprié et appuyer sur 'Enter' pour continuer..."
 
     - name: Exécuter le rôle mapr_cluster_setup
-      include_role:
+      import_role:
         name: mapr_cluster_setup
       tags:
         - setup_cluster

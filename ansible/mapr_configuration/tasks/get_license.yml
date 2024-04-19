@@ -3,14 +3,15 @@
   stat:
     path: /opt/mapr/conf/cluster_configured.txt
   register: cluster_configured
-  delegate_to: "{{ groups['CLDB_nodes'][0] }}"
+  delegate_to: "{{ groups['Licence_node'] | first }}"
 
-- name: Exécuter configure.sh sur le premier nœud CLDB uniquement
+- name: Exécuter configure.sh sur le nœud avec la licence
   command: >
     /opt/mapr/server/configure.sh -no-autostart
-    -C {{ groups['CLDB_nodes'][0] }}
-    -Z {{ groups['CLDB_nodes'][0] }}
+    -C {{ groups['Licence_node'] | first }}
+    -Z {{ groups['Licence_node'] | first }}
     -N {{ cluster_name }}
+  delegate_to: "{{ groups['Licence_node'] | first }}"
   when: not cluster_configured.stat.exists
 
 - name: Reload systemd daemon
@@ -78,5 +79,5 @@
   file:
     path: /opt/mapr/conf/cluster_configured.txt
     state: touch
-  delegate_to: "{{ groups['CLDB_nodes'][0] }}"
+  delegate_to: "{{ groups['Licence_node'] | first }}"
   when: license_output.stdout is defined and "ERROR" not in license_output.stdout

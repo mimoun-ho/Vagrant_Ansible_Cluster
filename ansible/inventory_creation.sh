@@ -32,6 +32,7 @@ if [ ! -f "$INVENTORY_FILE" ]; then
     echo "[CollecTD_nodes]" >> "$INVENTORY_FILE"
     echo "[Gateway_nodes]" >> "$INVENTORY_FILE"
     echo "[Httpfs_nodes]" >> "$INVENTORY_FILE"
+    echo "[Licence_node]" >> "$INVENTORY_FILE"
     echo "[edge_node]" >> "$INVENTORY_FILE"
     echo "[all_nodes]" >> "$INVENTORY_FILE"
 fi

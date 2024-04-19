@@ -1,2 +1,4 @@
 ---
-- import_tasks: upload_license.yml
+- include_tasks: upload_license.yml
+  when: inventory_hostname in groups['Licence_node']
+

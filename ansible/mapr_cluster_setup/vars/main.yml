@@ -1,2 +1,3 @@
 ---
 # vars file for mapr_cluster_setup
+cluster_name: mapr.cluster.local
