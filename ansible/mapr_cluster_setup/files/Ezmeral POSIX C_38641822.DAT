@@ -1,0 +1,108 @@
+-----BEGIN SIGNED MESSAGE-----
+clusterid: "8578176033056434910"
+version: "4.0"
+customerid: "YHYD6A24YJ5Y"
+issuer: "Hewlett Packard Enterprise (HPE)"
+licType: AdditionalFeatures
+description: "HPE Ezmeral Data Fabric Cons 90-Day Eval (PACC Advanced)"
+enforcement: HARD
+gracePeriod: 1296000
+issuedate: 1713602470
+expirationdate: 1721464870
+issuedateStr: "Sat Apr 20 08:41:10 GMT 2024"
+expdateStr: "Sat Jul 20 08:41:10 GMT 2024"
+capabilities {
+  feature: POSIX_CLIENT_GOLD
+  name: "MapR POSIX Client for Containerized Apps"
+  permission: ALLOW
+  featureData {
+    maxNfsClientNodes: "9999"
+  }
+}
+startDate: 1713602468
+consumptionLicensing: true
+startDateStr: "Sat Apr 20 08:41:08 GMT 2024"
+-----BEGIN DATA-----
+ChM4NTc4MTc2MDMzMDU2NDM0OTEwEgM0LjAaDFlIWUQ2QTI0WUo1WSogSGV3bGV0dCBQYWNrYXJk
+IEVudGVycHJpc2UgKEhQRSkwDTo4SFBFIEV6bWVyYWwgRGF0YSBGYWJyaWMgQ29ucyA5MC1EYXkg
+RXZhbCAoUEFDQyBBZHZhbmNlZClAAkiAjU9Qpv+NsQZYpvDttAZiHFNhdCBBcHIgMjAgMDg6NDE6
+MTAgR01UIDIwMjRqHFNhdCBKdWwgMjAgMDg6NDE6MTAgR01UIDIwMjSiATYIFRIoTWFwUiBQT1NJ
+WCBDbGllbnQgZm9yIENvbnRhaW5lcml6ZWQgQXBwcxgDUgYaBDk5OTm4AaT/jbEGwAEBygEcU2F0
+IEFwciAyMCAwODo0MTowOCBHTVQgMjAyNA==
+-----BEGIN SIGNATURE-----
+abX70hG2T/1BI75LmSaBks3sFPhcMiEnAcl1ZckWzHUc+DyK3SeshC77LciIFDdyhV/HvcDX5Hpm
+PZFJli+b7MXcqj7bnQQVIFzYrkMIRIXEG2rUAIgmAZooooQSBMdVABzuDjGpNTIuLfNpkwO6dHEu
+4UcgGzeXasQpYocr0nwc2Z+5EvPG8y/Sai0LlQryhcRtmQMA50haPQZbeQXzIdbCVyFa8mW7yMHT
+J1qwYpIM5Z7CaN3XhE2LPcZTf62H5G5TF7zc7Q4tv6/ToSBzJeB0cGRP0tmzE8g+CMXiGKKL8j1Q
+FoBqKfySHj1//cyQlfdsMsZtLCW4D3/qIrCszR7DTfMmZ1/BBQ4i6p1xtSzMtpoHAEU75bj+nzLg
+eGoiWIxffrzB/HHIEfwSPVqq5wa7SfP9NtE4Oax9T/V6+PR8qEgnjMkasIYzfThpdx5p2yr+QS4f
+nC2SjF+6TTjRycFevpywEpyB6urmQVGVj1SyYmK7VnKWDK7t+tw99ARvQFTOu4gJ7I8bX1cxfyJv
+9llyLeSU2JZ1Q87Q/AkWestvPo9QkkRsK/cob6hOYy/XdkCJ2U/Axkh2GIGgDLrjM/2dFliUPb1C
+PzmTUOIbm1aYPCgjEZ06MNoB9vD9DaK0h+wTx8+LDQlfOi8K/n+0oe9NJQktAyH11Zk9yf+CUnhO
+oZ5irgANNZ4EBtAABeZwJXT2Q0E6h3oQVMVcI2VqbjVgkslGHoQiJHjWKYBkSyGaiWSKhl55nV9x
+C4XNI3nNqDeSh/KSSzARaINmlZ8zs3n99LuzcDmGI8Bh78JDVuqi8l4LIFQs84tj8kSCkJOVN7GD
+56+JKp0S40oUfg8TYMNTUVOxC+DGk6PZhkL4ofe5bLPeW7TOQnio3aWu7XHE/d/jMqSjX4+a94FR
+Sk0rTI6qIlfQYRpkH/clir6dmR8J8k0PPloNIiGXSJ+Zfydz26s6XhwEKas0Pj7DwrAyh7hdbrpb
+NzI1w/Xxt/J0a9LzAIxARvdoqDAdLDuC3ySUdPkkLC4u/rt57HzKSdcA4l6DIn16PRxBPhl91dQA
+TAEOOxmINscMxbCFmLuv7OzKupNavYIxwUiwPfogamMJX+dCZAI7ItouNP3VVYLKdIeJZJIEopfZ
+HxqHqGamqBQdkDhG3k15CY+Ayqf9D8PUkE0hrZTbk3WY1QPbcYgXXGcYXnJSmbWwHm/B6qyGShAM
+zP247sbFVUjJs/d8rUdNyjBQIX63rkpSj6NXhioPxi550m1Z1sPh+uZyUlB6yE540Iq/GvSnrMT5
+l/K1Dgl8ckUOKDH3xI39XMtBkMFaD8+SDvrbG8Cz4TI0mwLVknMirS4I0XCxCExodSm0eIcSig==
+-----END SIGNATURE-----
+
+UchwWWHlGR2+qUh8utbUmm+F3nQ=
+-----END MESSAGE HASH-----
+-----BEGIN SIGNED MESSAGE-----
+clusterid: "8578176033056434910"
+version: "4.0"
+customerid: "YHYD6A24YJ5Y"
+issuer: "Hewlett Packard Enterprise (HPE)"
+licType: AdditionalFeatures
+description: "HPE Ezmeral Data Fabric Cons 90-Day Eval (PACC Advanced)"
+enforcement: HARD
+gracePeriod: 1296000
+issuedate: 1713602470
+expirationdate: 1721464870
+issuedateStr: "Sat Apr 20 08:41:10 GMT 2024"
+expdateStr: "Sat Jul 20 08:41:10 GMT 2024"
+capabilities {
+  feature: POSIX_CLIENT_GOLD
+  name: "MapR POSIX Client for Containerized Apps"
+  permission: ALLOW
+  featureData {
+    maxNfsClientNodes: "9999"
+  }
+}
+startDate: 1713602468
+consumptionLicensing: true
+startDateStr: "Sat Apr 20 08:41:08 GMT 2024"
+-----BEGIN DATA-----
+ChM4NTc4MTc2MDMzMDU2NDM0OTEwEgM0LjAaDFlIWUQ2QTI0WUo1WSogSGV3bGV0dCBQYWNrYXJk
+IEVudGVycHJpc2UgKEhQRSkwDTo4SFBFIEV6bWVyYWwgRGF0YSBGYWJyaWMgQ29ucyA5MC1EYXkg
+RXZhbCAoUEFDQyBBZHZhbmNlZClAAkiAjU9Qpv+NsQZYpvDttAZiHFNhdCBBcHIgMjAgMDg6NDE6
+MTAgR01UIDIwMjRqHFNhdCBKdWwgMjAgMDg6NDE6MTAgR01UIDIwMjSiATYIFRIoTWFwUiBQT1NJ
+WCBDbGllbnQgZm9yIENvbnRhaW5lcml6ZWQgQXBwcxgDUgYaBDk5OTm4AaT/jbEGwAEBygEcU2F0
+IEFwciAyMCAwODo0MTowOCBHTVQgMjAyNA==
+-----BEGIN SIGNATURE-----
+UBtmO8dp9RoVZvqRMm6XS6Cpb64FSFdFBa169dVDxyNOz7eefc3emEi14V6oqvB2qwWrQgyJikDh
+i5LZGiXbTtYoiqKQwSAxiyDooMgnF4xxkqtwIgD4yuQFdSzkB5ckp+/41FrNe7V59Wx0ysJdkgVb
+nNXURHbH5takmJ7j++I7Aeyht56YVNq8JCwy+UaaQ5ZKgUrRvAlAsGoBAkSljf4CoSjwAgZR57MO
+nkEx+eDJV3p++4VoaxI5G1iREZZ9pDaApCgqppaufIluWKpDJHpgefzlBMBr3jslaf4IGBo/wYnz
+vSKGWJnFerQ/dFZLE6MaB+VPGv0AFlC0b5ddeaBQoxbXKSNd0SwbeR+Az1/mDBE4OMHvQa2aJsZB
+EZPqNopFKOgVC97yasuDh/GHOWhrX2I76VWXMR5sY3aAkhmGpM/62ZUI/oMKNpghMMz0o7xfa0hF
+D0B/Pc8a8BldWE/F2asJw4uFNdzMBIAgpujwZM7THvB00cKKddNq7rMLMiGU+xtzlK2FMZj4Om1q
+sQ/1z/eVoFvcfT8s4EaEK7H1/eC5Wm9aMiFb28AkGvWqq9ajVJRnFTmqL2foWlbTqV+5jz+CnEnN
+qITLPea2fPKbf1PlVK9wCWqaEYhFhEMNxAMAp8JIk2qqtFU89Bu1KODubbzS4VdEGDFGWwhk6GQ4
+wkywYc314lZu5CvQSl3celGbBErILtW7gRKXSVrIcOpyjrnTrjVeqliJ33QMghL1uPt0nI7e5vSj
+GsS+5HgAJNDhOO7xaENqzrBqYliLPw8AGkapDKRyWFftiMBMqmwCZEkezx5W13Zg7bRPahl1l25M
+EwtYDsY3PgWAk7LVbuv22Ez2pIZ1EvLvMRcxP5sRbWMx+g5bBo/m+S2mZBLFjK7gJpKSL7j3xJPJ
+ZEZqtjPv0zD8czJ976zWVapCv+QXI34HEjq9eMGvGyDrGfzq7rbOigpsIo/ck1LxRm0gHMrUkKdP
+E5AanG6RwBKun/fwKS7s3eygA8L8KTDr/4u4uQA/3ezs2hooSWmKIlGa+78k25uV6SF2wk0/BXzV
+8Re7KpkwVOMWgtBF/2Aw1PDIdOORjptSKXggX8rjl6UUFF2TrrGVOm/pzdSjsECwP0k3Y+HJUjVO
+ek1a4J9oPlRf0iBw+d/C4Mm02wv9qA36ESR3v9xmbSGBTubsW4RM5ZaNZB9Fz6k4tGLYoKDLHQaQ
+CgT6ZzTNXgu+qGHchIdhKr6iRheEFW3qJNAkbEiTZzZlcxHDWMFmzgqnyre6oJ6oTzrDkh2vaBv2
+1IbWWfrc8l3byZfgtJCrFIblOWlN0LUPvhqVa91nbZvT676qokBSN6k25UJM6EJj5agi+I4maw==
+-----END SIGNATURE-----
+
+xY0zM1hl1FIKLd/kSchfnS5vYP69no0Kw5dcTJMhb1I=
+-----END MESSAGE HASH-----

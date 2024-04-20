@@ -56,6 +56,7 @@
   register: disk_setup_result
   failed_when: >
     disk_setup_result.rc != 0 and 'Disk already added in disktab' not in disk_setup_result.stdout
+  ignore_errors: true
 
 - name: Check for MapR Cluster ID
   shell: maprcli license showId

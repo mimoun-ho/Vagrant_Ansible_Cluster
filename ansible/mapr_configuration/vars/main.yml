@@ -8,8 +8,7 @@ service_ports:
   ApiServer:
     - "5701/tcp"
     - "5702/tcp"
-    
-  Zookeeper: 
+  ZooKeeper: 
     - "2888/tcp" # follower-to-leader Communication
     - "3888/tcp" # Leader Election
     - "5181/tcp"
@@ -17,6 +16,7 @@ service_ports:
     - "7222/tcp"
     - "7220/tcp" # CLDB JMX Monitor Port
     - "7221/tcp" # CLDB web port
+    - "7443/tcp" # web.https.port
   WebServer:
     - "7443/tcp"
     - "8443/tcp"
@@ -82,6 +82,7 @@ service_ports:
   NFS:
     - "9997/tcp"
     - "9998/tcp"
+    - "2049/tcp"
   NodeManager:
     - "8027/tcp" # JMX Port
     - "8099/tcp" # Main

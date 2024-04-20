@@ -5,6 +5,12 @@
   register: existing_files
   delegate_to: localhost
 
+- name: Ensure the /opt/mapr/licenses directory exists
+  ansible.builtin.file:
+    path: /opt/mapr/licenses
+    state: directory
+
+
 - name: Rename files to remove URL encoding
   command: >
     mv "{{ item.path }}" "{{ item.path | regex_replace('%20', ' ') }}"

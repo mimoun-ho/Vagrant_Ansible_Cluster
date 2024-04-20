@@ -10,3 +10,7 @@
 - include_tasks: start_cluster.yml
 
 - import_tasks: modify_config_file.yml
+
+- import_tasks: validation_test.yml
+  tags:
+    - validation_test
