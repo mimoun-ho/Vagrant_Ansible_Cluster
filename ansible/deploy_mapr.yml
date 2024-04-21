@@ -4,6 +4,7 @@
   become: yes
   vars_files:
     - ./mapr_configuration/vars/creds.yml   
+    - ./mapr_configuration/vars/creds.yml  
 
   tasks:
     - name: Exécuter le rôle mapr_configuration

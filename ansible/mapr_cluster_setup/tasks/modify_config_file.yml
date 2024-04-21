@@ -1,11 +1,13 @@
-- name: Configure zoo.cfg to listen on all interfaces
+- name: Configure zoo.cfg to listen on all interfaces or specific host IP
   lineinfile:
     path: /opt/mapr/zookeeper/zookeeper-3.4.11/conf/zoo.cfg
-    regexp: '^server.{{ item.id }}=.*'
-    line: "server.{{ item.id }}={{ (inventory_hostname == item.host) | ternary('0.0.0.0', hostvars[item.host].ansible_host) }}:2888:3888"
-  loop: "{{ zookeeper_hosts }}"
-  vars:
-    zookeeper_hosts: "{{ groups['ZooKeeper_nodes'] | map('regex_replace', '^(.*)$', '{ id: \\1, host: \\1 }') | map('from_yaml') | list }}"
+    regexp: '^server.{{ idx }}=.*'
+    line: "server.{{ idx }}={{ (inventory_hostname == item) | ternary('0.0.0.0', hostvars[item].ansible_host) }}:2888:3888"
+  loop: "{{ groups['ZooKeeper_nodes'] }}"
+  loop_control:
+    index_var: idx
+  when: inventory_hostname in groups['ZooKeeper_nodes']
+
 
 - name: restart zookeeper
   service:

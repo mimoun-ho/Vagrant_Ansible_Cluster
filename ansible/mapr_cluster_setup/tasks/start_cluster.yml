@@ -1,6 +1,7 @@
 - name: Ensure eth0 is down before starting services
-  command: sudo ifdown eth0
+  command: sudo ip link set eth0 down
   ignore_errors: true   
+  when: inventory_hostname in groups['ZooKeeper_nodes']
 
 - name: Start MapR-ZooKeeper
   systemd:

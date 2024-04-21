@@ -158,6 +158,10 @@ service_ports:
       - "8088/tcp"  # Web UI (HTTP)
       - "8090/tcp"  # Web UI (HTTPS)
     jps_name: "ResourceManager"
+  CollecTD: 
+    ports:
+      - "8025/tcp"
+    jps_name: "WardenMain"
   Shuffle_HTTP:
     ports:
       - "13562/tcp"

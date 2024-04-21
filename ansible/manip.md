@@ -7,6 +7,8 @@ ssh-keygen -R 192.168.50.101
 
 sudo /opt/mapr/server/configure.sh -R
 
+ansible-playbook -i inventory.ini add_services.yml --ask-vault-pass -K 
+
 cd /opt/mapr
 sudo find . -type d -name "*.new"
 sudo cp -r /opt/mapr/conf/conf.d.new/* /opt/mapr/conf/conf.d/
