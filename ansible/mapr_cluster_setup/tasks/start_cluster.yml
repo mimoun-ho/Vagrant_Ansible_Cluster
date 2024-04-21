@@ -1,7 +1,6 @@
-- name: Reload systemd daemon
-  systemd:
-    daemon_reload: yes
-  when: inventory_hostname in groups['ZooKeeper_nodes']
+- name: Ensure eth0 is down before starting services
+  command: sudo ifdown eth0
+  ignore_errors: true   
 
 - name: Start MapR-ZooKeeper
   systemd:
@@ -13,4 +12,5 @@
   systemd:
     name: mapr-warden
     state: started
+
 

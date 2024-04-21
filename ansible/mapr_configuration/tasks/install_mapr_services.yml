@@ -1,3 +1,7 @@
+- name: Ensure eth0 is down before starting services
+  command: sudo ifup eth0
+  ignore_errors: true   
+
 - name: Installer zookeeper sur Ubuntu
   apt:
     name:

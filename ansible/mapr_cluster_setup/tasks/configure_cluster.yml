@@ -5,5 +5,7 @@
     -Z {{ groups['ZooKeeper_nodes'] | join(',') }}
     -N {{ cluster_name }}
 
-
-   
+- name: Reload systemd daemon
+  systemd:
+    daemon_reload: yes
+  when: inventory_hostname in groups['ZooKeeper_nodes']

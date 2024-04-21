@@ -3,19 +3,19 @@
 # Le module firewalld est ensuite appelé pour chaque port dans cette liste, configurant le pare-feu pour permettre le trafic sur ces ports.
 # Chaque type de noeud aura uniquement les ports nécessaires ouverts
 
-- name: Démarrer et activer firewalld
+- name: enable and start
   systemd:
     name: firewalld
     state: started
     enabled: true
     
-- name: Ouvrir les ports nécessaires pour chaque service
+- name: Open ports for each services
   firewalld:
     port: "{{ item }}"
     permanent: true
     state: enabled
     immediate: true
-  loop: "{{ query('dict', service_ports) | selectattr('key', 'in', match_groups) | map(attribute='value') | flatten }}"
+  loop: "{{ query('dict', service_ports) | selectattr('key', 'in', match_groups) | map(attribute='value.ports') | flatten }}"
   when: match_groups | length > 0
   vars:
     match_groups: "{{ group_names | map('regex_replace', '_nodes$', '') | map('regex_replace', '^.*_', '') | select('in', service_ports.keys()) | list }}"

@@ -78,8 +78,24 @@
           {% for host in groups['NodeManager_nodes'] %}
           NodeManager at {{ host }}: {{ hostvars[host].nm_status.stdout | default('API response not available') }}
           {% endfor %}
-          
+
+
     - name: Save to file
       copy:
         content: "{{ report }}"
         dest: "./output/validation_test_{{ ansible_date_time.date }}_{{ ansible_date_time.hour }}-{{ ansible_date_time.minute }}-{{ ansible_date_time.second }}.txt"
+
+    - name: Send report to Slack
+      uri:
+        url: "{{ slack_webhook_url }}"
+        method: POST
+        headers:
+          Content-Type: "application/json"
+        body_format: json
+        body: >
+          {{
+            {
+              "text": "Here is the status report for the services:\n" + report
+            } | to_json
+          }}
+      ignore_errors: true
