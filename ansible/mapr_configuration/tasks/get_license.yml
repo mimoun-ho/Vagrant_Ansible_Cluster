@@ -50,7 +50,7 @@
   when: not cluster_configured.stat.exists
 
 - name: Exécuter disksetup pour configurer les disques
-  command: /opt/mapr/server/disksetup -F /tmp/disks
+  command: sudo /opt/mapr/server/disksetup -F /tmp/disks
   when:
     - hostvars[inventory_hostname]['nfs_disks'] | default(0) | int > 0
   register: disk_setup_result
@@ -59,11 +59,11 @@
   ignore_errors: true
 
 - name: Check for MapR Cluster ID
-  shell: maprcli license showId
+  shell: sudo maprcli license showId
   register: license_output
   until: "license_output.stdout != 'ERROR (10003) -  Show ClusterID: EOPFAILED'"
-  retries: 5
-  delay: 10  # Wait 10 seconds between retries
+  retries: 10
+  delay: 20  # Wait 10 seconds between retries
 
 
 - name: Debug license output
@@ -85,3 +85,17 @@
     state: touch
   delegate_to: "{{ groups['Licence_node'] | first }}"
   when: license_output.stdout is defined and "ERROR" not in license_output.stdout
+
+- name: Send slack notification for license files
+  uri:
+    url: "{{ slack_webhook_url }}"
+    method: POST
+    body_format: json
+    body: >
+      {
+        "text": "Le playbook Ansible est actuellement en attente des fichiers de licences."
+      }
+  delegate_to: localhost
+  run_once: true
+
+

@@ -4,6 +4,34 @@ mapr_ecosystem_version: "MEP-6.1.1"
 cluster_name: mapr.cluster.local
 gid: 3333
 service_ports:
+  all:
+    ports:
+      - "25/tcp"
+      - "323/tcp"
+      - "111/tcp"
+      - "41840/tcp"
+      - "43486/tcp"
+      - "10033/tcp"
+      - "758/tcp"
+      - "43430/tcp"
+      - "33316/tcp"
+      - "68/tcp"
+      - "38797/tcp"
+      - "41716/tcp"
+      - "1111/tcp"
+      - "42607/tcp"
+      - "39283/tcp"
+      - "798/tcp"
+      - "47059/tcp"
+      - "44079/tcp"
+      - "40030/tcp"
+      - "38048/tcp"
+      - "41830/tcp"
+      - "42188/tcp"
+      - "41420/tcp"
+      - "40242/tcp"
+
+    jps_name: "WardenMain"
   ApiServer:
     ports:
       - "5701/tcp"
@@ -67,19 +95,20 @@ service_ports:
       - "8086/tcp"  # REST Web UI
       - "16020/tcp"  # Regionserver
       - "16030/tcp"  # Regionserver UI
+      - "36219/tcp"
     jps_name: "HMaster"
   HistoryServer:
     ports:
       - "10020/tcp"  # RPC
       - "19888/tcp"  # Web UI and REST APIs
       - "19890/tcp"
-    jps_name: "HistoryServer"
+    jps_name: "JobHistoryServer"
   Hive:
     ports:
       - "9083/tcp"  # Metastore
       - "10000/tcp"  # Hiveserver2
       - "10002/tcp"  # Hiveserver2 Web UI
-    jps_name: "HiveServer2"
+    jps_name: "WardenMain"
   Httpfs:
     ports:
       - "14000/tcp"
@@ -143,7 +172,7 @@ service_ports:
   OpenTSDB:
     ports:
       - "4242/tcp"
-    jps_name: "OpenTSDB"
+    jps_name: "TSDMain"
   Port_Mapper:
     ports:
       - "111/tcp"

@@ -10,7 +10,7 @@
     state: latest
   when: "'Ubuntu' in hostvars[inventory_hostname]['OS']"
 
-- name: Installer les utilitaires et mettre à jour la liste des paquets disponibles pour Ubuntu
+- name: Install utilities and update for Ubuntu
   apt:
     name:
       - syslinux-utils
@@ -22,7 +22,7 @@
     update_cache: yes
   when: "'Ubuntu' in hostvars[inventory_hostname]['OS']"
 
-- name: Installer les utilitaires et mettre à jour la liste des paquets disponibles pour CentOS
+- name: Install utilities and update for CentOS
   yum:
     name:
       - syslinux

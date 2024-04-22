@@ -1,4 +1,4 @@
----
+
 - name: Déterminer les services JPS attendus pour le noeud courant en excluant certains groupes
   set_fact:
     expected_services: "{{ group_names | select('match', '^(?!Licence_node|edge_node|all_nodes).*_nodes$') | map('regex_replace', '_nodes$', '') | map('extract', service_ports) | map(attribute='jps_name') | list | unique }}"
@@ -35,10 +35,13 @@
       set_fact:
         local_service_status_report: "Hôte {{ inventory_hostname }} - Services démarrés: {{ running_services | intersect(expected_services) | join(', ') }}. Services manquants: {{ expected_services | difference(running_services) | join(', ') }}."
 
+        
+
   rescue:
     - fail:
         msg: "Maximum retries of grouped tasks reached or other failure. Services manquants: {{ expected_services | difference(running_services) | list | join(', ') }}"
       when: retry_count | int >= 30
+
 
 - name: Collecter les rapports de chaque hôte sur Edge
   set_fact:

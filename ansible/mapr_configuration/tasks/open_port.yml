@@ -3,17 +3,17 @@
 # Le module firewalld est ensuite appelé pour chaque port dans cette liste, configurant le pare-feu pour permettre le trafic sur ces ports.
 # Chaque type de noeud aura uniquement les ports nécessaires ouverts
 
-# - name: enable and start
-#   systemd:
-#     name: firewalld
-#     state: started
-#     enabled: true
+- name: enable and start
+  systemd:
+    name: firewalld
+    state: started
+    enabled: true
     
 
 
 - name: Filter relevant groups
   set_fact:
-    filtered_groups: "{{ group_names | select('match', '^(?!Licence_node|edge_node|all_nodes).*_nodes$') }}"
+    filtered_groups: "{{ group_names | select('match', '^(?!Licence_node|edge_node).*_nodes$') }}"
 
 - name: Determine required ports for the current node by excluding specific groups
   set_fact:
