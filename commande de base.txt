@@ -1,25 +1,38 @@
-sudo firewall-cmd --zone=public --add-port="3888"/tcp --permanent
+sudo firewall-cmd --zone=public --add-port="2049"/tcp --permanent
 sudo firewall-cmd --zone=public --list-all
 sudo firewall-cmd --set-default-zone=trusted
 sudo firewall-cmd --set-default-zone=public
 sudo firewall-cmd --reload
+
+sudo firewall-cmd --permanent --zone=public --set-target=ACCEPT
+sudo firewall-cmd --reload
+
 
 zookeeper
 
 cat /opt/mapr/zookeeper/zookeeper-3.4.11/conf/zoo.cfg
 sudo sed -i "s/server.1=$(hostname):2888:3888/server.1=0.0.0.0:2888:3888/" /opt/mapr/zookeeper/zookeeper-3.4.11/conf/zoo.cfg
 
+sudo sed -i "s/^server\.\([0-9]*\)=\($hostname\|0\.0\.0\.0\)\(:[0-9]*:[0-9]*\)$/server.\1=0.0.0.0\3/" /opt/mapr/zookeeper/zookeeper-3.4.11/conf/zoo.cfg
+
+sudo head -n -2 /opt/mapr/zookeeper/zookeeper-3.4.11/conf/zoo.cfg
 configure
 sudo /opt/mapr/server/configure.sh -no-autostart -C node03.cluster.local -Z node01.cluster.local,node02.cluster.local,node03.cluster.local -N mapr.cluster.local
 sudo /opt/mapr/server/configure.sh -R
 cat /opt/mapr/conf/mapr-clusters.conf
+sudo ifdown eth0
 
+sudo /opt/mapr/server/configure.sh -no-autostart -C node01.cluster.local -Z node01.cluster.local -N mapr.cluster.local
 license
 
 sudo maprcli license showId
 
 systemctl
-
+0800272276B5  0800277ABC03
+0800275EA061  08002757938E
+080027B46F7F 0800278B243E
+080027373E36  080027D15397
+sudo jps
 sudo systemctl start mapr-zookeeper
 sudo systemctl start mapr-warden
 sudo systemctl restart mapr-zookeeper
@@ -28,6 +41,17 @@ sudo systemctl status mapr-zookeeper
 sudo systemctl status mapr-warden
 sudo systemctl stop mapr-zookeeper
 sudo systemctl stop mapr-warden
+
+sudo bash -c 'echo -e "Première ligne\nDeuxième ligne\nTroisième ligne" > multilinefile.txt'
+hadoop fs -put multilinefile.txt /user/mapr/input/
+
+echo "net.ipv6.conf.all.disable_ipv6 = 1" | sudo tee -a /etc/sysctl.conf
+echo "net.ipv6.conf.default.disable_ipv6 = 1" | sudo tee -a /etc/sysctl.conf
+sudo sysctl -p
+
+sudo ip link set eth0 up
+sudo ip link set eth0 down
+sudo maprcli node services -nodes edge.cluster.local -name historyserver -action disable
 
 MapR File System (MapR-FS) : C'est le système de fichiers distribué de MapR. Il remplace HDFS dans un environnement Hadoop standard.
 MapR Control System (MCS) : Fournit une interface utilisateur graphique pour la gestion du cluster.

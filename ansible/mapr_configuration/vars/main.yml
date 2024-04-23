@@ -48,7 +48,7 @@ service_ports:
       - "31010/tcp"  # User Port
       - "31011/tcp"  # Control Port
       - "31012/tcp"  # Data Port
-    jps_name: "WardenMain"
+    jps_name: "Drillbit"
   Elasticsearch:
     ports:
       - "9200/tcp"  # Components Communication Port

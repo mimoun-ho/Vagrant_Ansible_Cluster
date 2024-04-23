@@ -22,13 +22,3 @@ vms:
 
 disk_size: 15000
 disks_folder_path: C:\\Users\\user\\Documents\\disks
-
-
-# Node01 (18 Go RAM, 6 CPU) :
-# Services : ZooKeeper, ResourceManager, HistoryServer,NodeManager
-# Node02 (8 Go RAM, 4 CPU) :
-# Services : CLDB, FileServer, NFS
-# Node03 (20 Go RAM, 5 CPU) :
-# Services : Drill, Hive, HiveMetastore, HiveServer2, NodeManager
-# Edge Node (4 Go RAM, 2 CPU) :
-# Services : Gateway, WebServer
