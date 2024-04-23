@@ -9,28 +9,10 @@ service_ports:
       - "25/tcp"
       - "323/tcp"
       - "111/tcp"
-      - "41840/tcp"
-      - "43486/tcp"
-      - "10033/tcp"
-      - "758/tcp"
-      - "43430/tcp"
-      - "33316/tcp"
       - "68/tcp"
-      - "38797/tcp"
-      - "41716/tcp"
       - "1111/tcp"
-      - "42607/tcp"
-      - "39283/tcp"
       - "798/tcp"
-      - "47059/tcp"
-      - "44079/tcp"
-      - "40030/tcp"
-      - "38048/tcp"
-      - "41830/tcp"
-      - "42188/tcp"
-      - "41420/tcp"
-      - "40242/tcp"
-
+      
     jps_name: "WardenMain"
   ApiServer:
     ports:
@@ -66,7 +48,7 @@ service_ports:
       - "31010/tcp"  # User Port
       - "31011/tcp"  # Control Port
       - "31012/tcp"  # Data Port
-    jps_name: "Drillbit"
+    jps_name: "WardenMain"
   Elasticsearch:
     ports:
       - "9200/tcp"  # Components Communication Port

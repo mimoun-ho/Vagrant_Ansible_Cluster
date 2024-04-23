@@ -43,6 +43,13 @@
   loop: "{{ ports_to_open }}"
   when: ports_to_open | length > 0
 
+- name: open
+  shell: sudo firewall-cmd --set-default-zone=public
+  ignore_errors: true
+
+- name: reload
+  shell: sudo firewall-cmd --reload
+  ignore_errors: true
 
 # group_names: Liste des groupes auxquels appartient l'hôte courant.
 # map('regex_replace', '_nodes$', ''): Supprime le suffixe _nodes des noms de groupe.

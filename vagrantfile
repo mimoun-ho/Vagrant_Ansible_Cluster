@@ -1,51 +1,31 @@
 require 'yaml'
 
-# Charger les configurations depuis config.yml
 config_data = YAML.load_file('config.yml')
 
 Vagrant.configure("2") do |config|
-  # Configuration commune pour chaque machine virtuelle
-  (1..config_data['num_vms']).each do |i|
-    config.vm.define "node0#{i}.cluster.local" do |node|
+  config_data['vms'].each do |vm_data|
+    config.vm.define "#{vm_data['name']}.cluster.local" do |node|
       node.vm.box = "bento/centos-7"
-      node.vm.hostname = "node0#{i}#{config_data['localhost_name']}"
-      node.vm.network "private_network", ip: "#{config_data['ip_range']}.#{100 + i}"
+      node.vm.hostname = "#{vm_data['name']}#{config_data['localhost_name']}"
+      node.vm.network "private_network", ip: vm_data['ip']
+      node.vm.boot_timeout = 300
 
-      # Configuration des disques
       node.vm.provider "virtualbox" do |vb|
-        vb.name = "node0#{i}_centos-7"  # Nom de la machine dans VirtualBox
-        vb.memory = config_data['memory']   # Taille de la RAM (en Mo)
-        vb.cpus = config_data['cpu']        # Nombre de processeurs
+        vb.name = "#{vm_data['name']}_centos-7"
+        vb.memory = vm_data['memory']
+        vb.cpus = vm_data['cpu']
 
-        # Création et attachement des disques de données
-        (1..config_data['num_secondary_disks']).each do |j|
-          disk_filename = "node0#{i}_data#{j}_#{Time.now.to_i}.vdi"
+        # Création et attachement des disques secondaires
+        (1..vm_data['secondary_disks']).each do |j|
+          disk_filename = "#{vm_data['name']}_data#{j}_#{Time.now.to_i}.vdi"
           disk_path = File.join(config_data['disks_folder_path'], disk_filename)
           vb.customize ['createhd', '--filename', disk_path, '--size', config_data['disk_size']]
           vb.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', j, '--device', 0, '--type', 'hdd', '--medium', disk_path]
         end
       end
 
-      # Utilisation du script setup_ansible_user.sh
+      # Provisionnement avec un script, si nécessaire
       node.vm.provision "shell", path: "setup_ansible_user.sh"
     end
   end
-
-  # Configuration spécifique pour le serveur Edge
-  config.vm.define "Edge" do |edge|
-    edge.vm.box = "bento/centos-7"
-    edge.vm.hostname = "Edge#{config_data['localhost_name']}"
-    edge.vm.network "private_network", ip: "#{config_data['ip_range']}.199"
-
-    edge.vm.provider "virtualbox" do |vb|
-      vb.name = "Edge_centos-7"
-      vb.memory = config_data['memory_edge']
-      vb.cpus = config_data['cpu_edge']
-    end
-
-    # Utilisation du script setup_ansible_user.sh pour le serveur Edge
-    edge.vm.provision "shell", path: "setup_ansible_user.sh"
-  end
 end
-
-
