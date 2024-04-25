@@ -7,7 +7,7 @@ sudo firewall-cmd --reload
 sudo firewall-cmd --permanent --zone=public --set-target=ACCEPT
 sudo firewall-cmd --reload
 
-
+s
 zookeeper
 
 cat /opt/mapr/zookeeper/zookeeper-3.4.11/conf/zoo.cfg
