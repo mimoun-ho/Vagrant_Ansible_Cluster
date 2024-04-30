@@ -4,7 +4,7 @@
 useradd -m -s /bin/bash ansible
 
 # Définir un mot de passe pour l'utilisateur ansible
-echo ansible:ansible | chpasswd
+echo ansible:xxxxx | chpasswd
 
  
 echo "ansible ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/ansible
